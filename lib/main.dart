@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 //import 'package:mask_text_input_formatter/mask_text_input_formatter.dart/';
@@ -65,10 +68,27 @@ class _MyAppState extends State<MyApp> {
   String lngaycong = '';
   String cn100 = '';
 
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
+  void loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (prefs.getDouble('tcbanngay150') == null) {
+        tangcabanngay150.text = "0";
+      } else {
+        tangcabanngay150.text = prefs.getDouble('tcbanngay150').toString();
+      }
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    Future<SharedPreferences> luuAll = SharedPreferences.getInstance();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -138,6 +158,7 @@ class _MyAppState extends State<MyApp> {
             double nghikluong = double.parse(ngaynghikhongluong.text);
            // print(nghikluong);
             double tcbanngay150 = double.parse(tangcabanngay150.text);
+            saveCache(tcbanngay150);
            // print(tcbanngay150);
             tc150 = tcbanngay150.toString();
             double tcabandem210 = double.parse(tangcabandem210.text);
@@ -273,6 +294,11 @@ class _MyAppState extends State<MyApp> {
       ),
       //button
     );
+  }
+
+  Future<void> saveCache(double number) async {
+    SharedPreferences luuAll = await SharedPreferences.getInstance();
+    luuAll.setDouble("tcbanngay150", number);
   }
 
   // Input ngày giờ
