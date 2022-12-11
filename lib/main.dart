@@ -39,6 +39,8 @@ class _MyAppState extends State<MyApp> {
   //var luongcoban = new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', rightSymbol: 'vi');
   //var luongcoban = new MaskedTextController(mask: '4553000');
 
+  //lan thu 2 day code
+
   var luongcoban = TextEditingController(text: '4553000');
   var thuongchuyencan = TextEditingController(text: '300000');
   var trocapxangxe = TextEditingController(text: '200000');
